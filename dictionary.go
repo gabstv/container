@@ -41,8 +41,8 @@ func (m *Dictionary[KT, VT]) Contains(k KT) bool {
 
 // Remove deletes the key from the dictionary.
 func (m *Dictionary[KT, VT]) Remove(k KT) bool {
-	m.lock.RLock()
-	defer m.lock.RUnlock()
+	m.lock.Lock()
+	defer m.lock.Unlock()
 	_, ok := m.m[k]
 	if !ok {
 		return false
@@ -53,8 +53,8 @@ func (m *Dictionary[KT, VT]) Remove(k KT) bool {
 
 // Pop removes and returns the value of the key.
 func (m *Dictionary[KT, VT]) Pop(k KT) (VT, bool) {
-	m.lock.RLock()
-	defer m.lock.RUnlock()
+	m.lock.Lock()
+	defer m.lock.Unlock()
 	v, ok := m.m[k]
 	if !ok {
 		var zv VT
