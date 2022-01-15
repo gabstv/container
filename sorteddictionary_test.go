@@ -17,4 +17,6 @@ func TestSortedDictionary(t *testing.T) {
 	assert.Equal(t, "three", d.Get(150))
 	assert.Equal(t, 1, d.Index(150))
 	assert.Equal(t, 2, d.Index(200))
+	d.Set(200, "four")
+	assert.Equal(t, "four", d.Get(200))
 }
