@@ -3,6 +3,7 @@ package linq_test
 import (
 	"testing"
 
+	"github.com/gabstv/container"
 	"github.com/gabstv/container/linq"
 	"github.com/stretchr/testify/assert"
 )
@@ -60,4 +61,28 @@ func TestLinq(t *testing.T) {
 	assert.Equal(t, 2004, result[0].Year)
 	assert.Equal(t, 2009, result[5].Year)
 	assert.Equal(t, "Aladdin UX", result[1].Name)
+}
+
+type Person struct {
+	Name string
+	Age  int
+}
+
+func TestLinqMap(t *testing.T) {
+	people := make(map[string]Person)
+	people["John"] = Person{Name: "John", Age: 30}
+	people["Mary"] = Person{Name: "Mary", Age: 25}
+	people["Peter"] = Person{Name: "Peter", Age: 20}
+	people["Paul"] = Person{Name: "Paul", Age: 40}
+	pplSlice := container.MapToSlice(people)
+
+	q := linq.From[container.MI[string, Person], container.MI[string, Person]](pplSlice)
+	mres := q.Where(func(item container.MI[string, Person]) bool {
+		return item.Value.Age >= 30
+	}).All()
+	peopleRes := container.SliceToMap(mres)
+	assert.Equal(t, 2, len(peopleRes))
+	assert.Equal(t, "John", peopleRes["John"].Name)
+	assert.Equal(t, 40, peopleRes["Paul"].Age)
+	assert.Equal(t, "", peopleRes["Mary"].Name)
 }
