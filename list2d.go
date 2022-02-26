@@ -39,6 +39,10 @@ func (l *List2D[T]) Get(x, y int) T {
 	return l.data[x+y*l.width]
 }
 
+func (l *List2D[T]) GetRef(x, y int) *T {
+	return &l.data[x+y*l.width]
+}
+
 // GetW is the same as Get, but wraps around if is out of bounds. It returns the
 // zero value if the width or height is zero
 func (l *List2D[T]) GetW(x, y int) T {
