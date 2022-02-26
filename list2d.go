@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 )
 
+// List2D is a 2D slice with some helper methods. It is NOT thread safe.
 type List2D[T any] struct {
 	data   []T
 	width  int
@@ -114,6 +115,23 @@ func NewList2D[T any](width, height int) *List2D[T] {
 	l.width = width
 	l.height = height
 	l.data = make([]T, width*height)
+	return l
+}
+
+// NewList2DFrom2DSlice creates a new list from a [y][x] slice.
+func NewList2DFrom2DSlice[T any](src [][]T) *List2D[T] {
+	if len(src) < 1 {
+		return NewList2D[T](0, 0)
+	}
+	h := len(src)
+	if len(src[0]) < 1 {
+		return NewList2D[T](0, h)
+	}
+	w := len(src[0])
+	l := NewList2D[T](w, h)
+	for y := range src {
+		copy(l.data[y*w:], src[y][:w])
+	}
 	return l
 }
 
