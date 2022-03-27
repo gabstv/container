@@ -1,8 +1,9 @@
 package container
 
 import (
-	"constraints"
 	"encoding/json"
+
+	"golang.org/x/exp/constraints"
 )
 
 // List2D is a 2D slice with some helper methods. It is NOT thread safe.

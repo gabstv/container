@@ -1,9 +1,10 @@
 package container
 
 import (
-	"constraints"
 	"sort"
 	"sync"
+
+	"golang.org/x/exp/constraints"
 )
 
 type SortedDictionary[KT constraints.Ordered, VT any] struct {

@@ -5,13 +5,13 @@
 package container_test
 
 import (
-	"constraints"
 	"math/rand"
 	"reflect"
 	"sort"
 	"testing"
 
 	"github.com/gabstv/container"
+	"golang.org/x/exp/constraints"
 )
 
 func intComparer[T constraints.Integer](left, right T) int {
