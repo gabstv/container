@@ -172,3 +172,10 @@ func (m *SortedDictionary[KT, VT]) Index(k KT) int {
 	}
 	return i
 }
+
+// Len returns the number of items in the dictionary.
+func (m *SortedDictionary[KT, VT]) Len() int {
+	m.lock.RLock()
+	defer m.lock.RUnlock()
+	return len(m.items)
+}
