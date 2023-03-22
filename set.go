@@ -61,3 +61,18 @@ func (s *Set[T]) Contains(item T) bool {
 	_, ok := s.m[item]
 	return ok
 }
+
+func (s *Set[T]) Pop() (T, bool) {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	if s.m == nil {
+		var item T
+		return item, false
+	}
+	for item := range s.m {
+		delete(s.m, item)
+		return item, true
+	}
+	var item T
+	return item, false
+}
